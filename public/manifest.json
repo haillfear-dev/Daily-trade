@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Daily Trade",
+  "description": "Copiloto de análise técnica para apoiar decisões de trading.",
+  "version": "0.1.0",
+  "permissions": ["sidePanel"],
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Abrir Daily Trade"
+  },
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content-script.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
