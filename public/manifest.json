@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Daily Trade — Copiloto",
+  "version": "0.1.0",
+  "description": "Análise técnica local e diário de operações, sem execução automática.",
+  "permissions": ["storage", "sidePanel"],
+  "host_permissions": ["https://*.iqoption.com/*"],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "content_scripts": [{ "matches": ["https://*.iqoption.com/*"], "js": ["content.js"], "run_at": "document_idle" }],
+  "side_panel": { "default_path": "index.html" },
+  "action": { "default_title": "Abrir Daily Trade" }
+}
