@@ -14,11 +14,15 @@ export default defineConfig({
         'content-script': fileURLToPath(
           new URL('src/content/content-script.ts', import.meta.url),
         ),
+        'diagnostics-main': fileURLToPath(
+          new URL('src/diagnostics/main-world.ts', import.meta.url),
+        ),
       },
       output: {
         entryFileNames: (chunkInfo) =>
           chunkInfo.name === 'service-worker' ||
-          chunkInfo.name === 'content-script'
+          chunkInfo.name === 'content-script' ||
+          chunkInfo.name === 'diagnostics-main'
             ? '[name].js'
             : 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',

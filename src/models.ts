@@ -1,6 +1,16 @@
 ﻿export type TrendDirection = 'bullish' | 'bearish' | 'sideways'
 export type TradeSide = 'long' | 'short'
 export type SignalStrength = 'weak' | 'moderate' | 'strong'
+export type MarketProduct = 'blitz' | 'digital' | 'unknown'
+export interface MarketPageContext {
+  provider: 'iq-option'
+  symbol: string | null
+  displaySymbol: string | null
+  isOtc: boolean
+  product: MarketProduct
+  pageUrl: string
+  updatedAt: number
+}
 export interface Candle {
   timestamp: number
   open: number
