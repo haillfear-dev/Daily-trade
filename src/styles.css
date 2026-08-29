@@ -85,6 +85,129 @@ input {
   background: linear-gradient(145deg, #131d2c, #101721);
   box-shadow: 0 18px 45px #0005;
 }
+.market-debug {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid #243044;
+  border-radius: 14px;
+  background: #0e1622;
+}
+.market-diagnostics {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid #243044;
+  border-radius: 14px;
+  background: #0e1622;
+}
+.market-diagnostics h2 {
+  margin: 3px 0 0;
+  font-size: 0.92rem;
+}
+.diagnostics-switch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #9fb1c6;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+.diagnostic-counters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  margin-top: 12px;
+}
+.diagnostic-counters > div,
+.diagnostic-events li {
+  padding: 8px;
+  border-radius: 8px;
+  background: #111c2a;
+}
+.diagnostic-counters span,
+.diagnostic-events span,
+.diagnostic-events small {
+  display: block;
+  color: #71839a;
+  font-size: 0.58rem;
+}
+.diagnostic-counters strong {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.8rem;
+}
+.diagnostic-sources {
+  margin-top: 10px;
+  color: #9fb1c6;
+  font-size: 0.65rem;
+}
+.diagnostic-sources span {
+  display: block;
+  margin-top: 3px;
+  color: #71839a;
+}
+.diagnostic-events {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.diagnostic-events li strong {
+  font-size: 0.67rem;
+}
+.diagnostic-events small {
+  margin-top: 3px;
+}
+.diagnostic-note {
+  margin: 11px 0 0;
+  color: #71839a;
+  font-size: 0.62rem;
+  line-height: 1.45;
+}
+.market-debug h2 {
+  margin: 3px 0 0;
+  font-size: 0.92rem;
+}
+.connection {
+  padding: 4px 7px;
+  border: 1px solid #533036;
+  border-radius: 999px;
+  color: #fda4af;
+  background: #3f111b;
+  font-size: 0.56rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+}
+.connection.connected {
+  border-color: #14532d;
+  color: #86efac;
+  background: #052e1a;
+}
+.market-debug dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 13px 0 0;
+}
+.market-debug dl > div {
+  min-width: 0;
+  padding: 8px 9px;
+  border-radius: 8px;
+  background: #111c2a;
+}
+.market-debug dt {
+  color: #71839a;
+  font-size: 0.57rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.market-debug dd {
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+  color: #cad6e5;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
 .section-heading,
 .section-title,
 .asset-heading,

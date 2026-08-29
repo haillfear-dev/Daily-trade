@@ -4,8 +4,14 @@ import {
   type MarketDataAdapter,
 } from './adapters/demo-market'
 import { AssetCard } from './components/AssetCard'
+import { MarketContextDebug } from './components/MarketContextDebug'
+import { MarketDiagnostics } from './components/MarketDiagnostics'
 import { translateSignal, type DashboardAsset } from './dashboard/analysis'
 import { loadDashboard } from './dashboard/load'
+import { getActiveMarketContext } from './dashboard/market-context'
+import { getDiagnostics, setDiagnosticsEnabled } from './dashboard/diagnostics'
+import type { MarketDiagnosticsSnapshot } from './diagnostics/types'
+import type { MarketContextResponse } from './messaging/market-context'
 
 type LoadState = 'loading' | 'ready' | 'empty' | 'error'
 export interface AppProps {
@@ -19,6 +25,16 @@ export function App({ adapter }: AppProps) {
   const [assets, setAssets] = useState<DashboardAsset[]>([])
   const [state, setState] = useState<LoadState>('loading')
   const [debug, setDebug] = useState(false)
+  const [marketContext, setMarketContext] = useState<MarketContextResponse>({
+    connected: false,
+    tabId: null,
+    context: null,
+  })
+  const [diagnostics, setDiagnostics] = useState<MarketDiagnosticsSnapshot>({
+    enabled: false,
+    tabId: null,
+    events: [],
+  })
   const load = useCallback(async () => {
     setState('loading')
     const result = await loadDashboard(marketAdapter)
@@ -36,6 +52,23 @@ export function App({ adapter }: AppProps) {
       active = false
     }
   }, [marketAdapter])
+  useEffect(() => {
+    let active = true
+    const refreshContext = () => {
+      void getActiveMarketContext().then((context) => {
+        if (active) setMarketContext(context)
+      })
+      void getDiagnostics().then((snapshot) => {
+        if (active) setDiagnostics(snapshot)
+      })
+    }
+    refreshContext()
+    const interval = window.setInterval(refreshContext, 1_000)
+    return () => {
+      active = false
+      window.clearInterval(interval)
+    }
+  }, [])
   const best = assets[0]
   const summary = useMemo(
     () =>
@@ -100,6 +133,13 @@ export function App({ adapter }: AppProps) {
           <div className="summary-placeholder">Aguardando dados do radar…</div>
         )}
       </section>
+      <MarketContextDebug market={marketContext} />
+      <MarketDiagnostics
+        diagnostics={diagnostics}
+        onToggle={(enabled) => {
+          void setDiagnosticsEnabled(enabled).then(setDiagnostics)
+        }}
+      />
       <section className="opportunities">
         <div className="section-title">
           <div>
