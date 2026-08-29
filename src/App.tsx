@@ -5,9 +5,12 @@ import {
 } from './adapters/demo-market'
 import { AssetCard } from './components/AssetCard'
 import { MarketContextDebug } from './components/MarketContextDebug'
+import { MarketDiagnostics } from './components/MarketDiagnostics'
 import { translateSignal, type DashboardAsset } from './dashboard/analysis'
 import { loadDashboard } from './dashboard/load'
 import { getActiveMarketContext } from './dashboard/market-context'
+import { getDiagnostics, setDiagnosticsEnabled } from './dashboard/diagnostics'
+import type { MarketDiagnosticsSnapshot } from './diagnostics/types'
 import type { MarketContextResponse } from './messaging/market-context'
 
 type LoadState = 'loading' | 'ready' | 'empty' | 'error'
@@ -26,6 +29,11 @@ export function App({ adapter }: AppProps) {
     connected: false,
     tabId: null,
     context: null,
+  })
+  const [diagnostics, setDiagnostics] = useState<MarketDiagnosticsSnapshot>({
+    enabled: false,
+    tabId: null,
+    events: [],
   })
   const load = useCallback(async () => {
     setState('loading')
@@ -49,6 +57,9 @@ export function App({ adapter }: AppProps) {
     const refreshContext = () => {
       void getActiveMarketContext().then((context) => {
         if (active) setMarketContext(context)
+      })
+      void getDiagnostics().then((snapshot) => {
+        if (active) setDiagnostics(snapshot)
       })
     }
     refreshContext()
@@ -123,6 +134,12 @@ export function App({ adapter }: AppProps) {
         )}
       </section>
       <MarketContextDebug market={marketContext} />
+      <MarketDiagnostics
+        diagnostics={diagnostics}
+        onToggle={(enabled) => {
+          void setDiagnosticsEnabled(enabled).then(setDiagnostics)
+        }}
+      />
       <section className="opportunities">
         <div className="section-title">
           <div>
